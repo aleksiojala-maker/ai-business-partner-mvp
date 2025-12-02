@@ -26,5 +26,9 @@ export enum VirtualRole {
   GENERAL = 'General Assistant',
   LAKIMIES = 'Lakimies (Legal)',
   TALOUS = 'Talouspäällikkö (Finance)',
-  MYYNTI = 'Myyntitykki (Sales)'
+  MYYNTI = 'Myyntitykki (Sales)',
+  STRATEGI = 'Strategisti (Strategy)',
+  KOODARI = 'Koodari (Tech)',
+  VIESTINTA = 'Viestintä (Comms)',
+  VALMENTAJA = 'Valmentaja (Coach)'
 }

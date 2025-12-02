@@ -101,7 +101,11 @@ const Library: React.FC<LibraryProps> = ({ state, onAddPrompt, onDeletePrompt, o
                 <option value="Legal">Legal</option>
                 <option value="Admin">Admin</option>
                 <option value="Sales">Sales</option>
-                <option value="Marketing">Marketing</option>
+                <option value="Strategy">Strategy</option>
+                <option value="Coding">Coding</option>
+                <option value="Writing">Writing</option>
+                <option value="Communication">Communication</option>
+                <option value="Productivity">Productivity</option>
               </select>
             </div>
           </div>
