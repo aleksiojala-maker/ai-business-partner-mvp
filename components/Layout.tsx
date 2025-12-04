@@ -5,7 +5,8 @@ import {
   Library, 
   Settings, 
   Menu,
-  X
+  X,
+  PieChart
 } from 'lucide-react';
 
 const Layout: React.FC = () => {
@@ -35,6 +36,10 @@ const Layout: React.FC = () => {
           <NavLink to="/" className={navClass}>
             <LayoutDashboard size={20} />
             <span>Dashboard</span>
+          </NavLink>
+          <NavLink to="/finance" className={navClass}>
+            <PieChart size={20} />
+            <span>Finance</span>
           </NavLink>
           <NavLink to="/library" className={navClass}>
             <Library size={20} />
@@ -72,6 +77,10 @@ const Layout: React.FC = () => {
               <NavLink to="/" onClick={toggleMenu} className={navClass}>
                 <LayoutDashboard size={20} />
                 <span>Dashboard</span>
+              </NavLink>
+              <NavLink to="/finance" onClick={toggleMenu} className={navClass}>
+                <PieChart size={20} />
+                <span>Finance</span>
               </NavLink>
               <NavLink to="/library" onClick={toggleMenu} className={navClass}>
                 <Library size={20} />

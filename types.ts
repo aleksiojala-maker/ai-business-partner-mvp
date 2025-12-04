@@ -16,10 +16,31 @@ export interface CompanyGenome {
   language: 'Finnish' | 'English' | 'Swedish';
 }
 
+export interface Product {
+  id: string;
+  name: string;
+  type: 'Service' | 'Product';
+  price: number;
+  vat: number; // e.g., 25.5
+}
+
+export interface Transaction {
+  id: string;
+  date: string;
+  type: 'Income' | 'Expense';
+  description: string;
+  amount: number; // Gross amount
+  status: 'Paid' | 'Pending' | 'Overdue';
+  customer?: string;
+  productId?: string; // Link to a specific product
+}
+
 export interface AppState {
   apiKey: string;
   genome: CompanyGenome;
   prompts: Prompt[];
+  products: Product[];
+  transactions: Transaction[];
 }
 
 export enum VirtualRole {

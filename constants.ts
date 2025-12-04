@@ -1,4 +1,4 @@
-import { Prompt, VirtualRole } from './types';
+import { Prompt, VirtualRole, Product, Transaction } from './types';
 
 export const DEFAULT_GENOME = {
   name: '',
@@ -7,6 +7,18 @@ export const DEFAULT_GENOME = {
   tone: 'Professional' as const,
   language: 'Finnish' as const,
 };
+
+export const SEED_PRODUCTS: Product[] = [
+  { id: 'p1', name: 'Consulting Hour (Senior)', type: 'Service', price: 150, vat: 25.5 },
+  { id: 'p2', name: 'Website Audit', type: 'Service', price: 850, vat: 25.5 },
+  { id: 'p3', name: 'SaaS Subscription (Monthly)', type: 'Product', price: 29, vat: 25.5 },
+];
+
+export const SEED_TRANSACTIONS: Transaction[] = [
+  { id: 't1', date: new Date().toISOString().split('T')[0], type: 'Income', description: 'Consulting Project Alpha', amount: 1500, status: 'Paid', customer: 'Nokia Oyj', productId: 'p1' },
+  { id: 't2', date: new Date(Date.now() - 86400000 * 2).toISOString().split('T')[0], type: 'Expense', description: 'Software Licenses', amount: 45, status: 'Paid' },
+  { id: 't3', date: new Date(Date.now() - 86400000 * 5).toISOString().split('T')[0], type: 'Income', description: 'Website Audit', amount: 850, status: 'Pending', customer: 'Startup Oy', productId: 'p2' },
+];
 
 export const SEED_LIBRARY: Prompt[] = [
   // --- EXISTING FINNISH CONTEXT PROMPTS ---
@@ -215,10 +227,10 @@ export const SEED_LIBRARY: Prompt[] = [
 export const ROLE_DESCRIPTIONS = {
   [VirtualRole.GENERAL]: "Ready to help with day-to-day tasks.",
   [VirtualRole.LAKIMIES]: "Specialized in Finnish contract law and compliance.",
-  [VirtualRole.TALOUS]: "Expert in Verohallinto rules, VAT, and YEL.",
-  [VirtualRole.MYYNTI]: "Persuasive copywriter for B2B growth.",
-  [VirtualRole.STRATEGI]: "Visionary planning and problem solving.",
-  [VirtualRole.KOODARI]: "Technical architecture and code quality.",
-  [VirtualRole.VIESTINTA]: "Clear communication and storytelling.",
-  [VirtualRole.VALMENTAJA]: "Productivity hacks and learning models."
+  [VirtualRole.TALOUS]: "Navigate tax (Vero), VAT, and profitability.",
+  [VirtualRole.MYYNTI]: "Sales copy, objections, and growth tactics.",
+  [VirtualRole.STRATEGI]: "Business modeling and decision frameworks.",
+  [VirtualRole.KOODARI]: "Technical architecture, debugging, and testing.",
+  [VirtualRole.VIESTINTA]: "Professional communication and tone management.",
+  [VirtualRole.VALMENTAJA]: "Productivity, learning, and mental models."
 };

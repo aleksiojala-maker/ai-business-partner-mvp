@@ -4,8 +4,9 @@ import Layout from './components/Layout';
 import Dashboard from './components/Dashboard';
 import Library from './components/Library';
 import Settings from './components/Settings';
-import { AppState, Prompt, CompanyGenome } from './types';
-import { DEFAULT_GENOME, SEED_LIBRARY } from './constants';
+import Finance from './components/Finance';
+import { AppState, Prompt, CompanyGenome, Product, Transaction } from './types';
+import { DEFAULT_GENOME, SEED_LIBRARY, SEED_PRODUCTS, SEED_TRANSACTIONS } from './constants';
 
 const LOCAL_STORAGE_KEY = 'goodi_app_data_v1';
 
@@ -15,7 +16,13 @@ const App: React.FC = () => {
     const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
     if (saved) {
       try {
-        return JSON.parse(saved);
+        const parsed = JSON.parse(saved);
+        // Ensure new fields exist if loading from old storage
+        return {
+          ...parsed,
+          products: parsed.products || SEED_PRODUCTS,
+          transactions: parsed.transactions || SEED_TRANSACTIONS
+        };
       } catch (e) {
         console.error("Failed to parse local storage", e);
       }
@@ -23,7 +30,9 @@ const App: React.FC = () => {
     return {
       apiKey: '',
       genome: DEFAULT_GENOME,
-      prompts: SEED_LIBRARY
+      prompts: SEED_LIBRARY,
+      products: SEED_PRODUCTS,
+      transactions: SEED_TRANSACTIONS
     };
   });
 
@@ -66,6 +75,39 @@ const App: React.FC = () => {
     }));
   };
 
+  // --- Finance Handlers ---
+  const handleAddProduct = (product: Product) => {
+    setAppState(prev => ({
+      ...prev,
+      products: [...prev.products, product]
+    }));
+  };
+
+  const handleDeleteProduct = (id: string) => {
+    if (window.confirm('Delete this product?')) {
+      setAppState(prev => ({
+        ...prev,
+        products: prev.products.filter(p => p.id !== id)
+      }));
+    }
+  };
+
+  const handleAddTransaction = (transaction: Transaction) => {
+    setAppState(prev => ({
+      ...prev,
+      transactions: [transaction, ...prev.transactions]
+    }));
+  };
+
+  const handleDeleteTransaction = (id: string) => {
+    if (window.confirm('Delete this transaction?')) {
+      setAppState(prev => ({
+        ...prev,
+        transactions: prev.transactions.filter(t => t.id !== id)
+      }));
+    }
+  };
+
   return (
     <HashRouter>
       <Routes>
@@ -75,6 +117,13 @@ const App: React.FC = () => {
               state={appState} 
               onDeletePrompt={handleDeletePrompt}
               onToggleFavorite={handleToggleFavorite}
+            />
+          } />
+          <Route path="finance" element={
+            <Finance 
+              state={appState}
+              onAddTransaction={handleAddTransaction}
+              onDeleteTransaction={handleDeleteTransaction}
             />
           } />
           <Route path="library" element={
@@ -90,6 +139,8 @@ const App: React.FC = () => {
               state={appState}
               onUpdateKey={handleUpdateKey}
               onUpdateGenome={handleUpdateGenome}
+              onAddProduct={handleAddProduct}
+              onDeleteProduct={handleDeleteProduct}
             />
           } />
           <Route path="*" element={<Navigate to="/" replace />} />
